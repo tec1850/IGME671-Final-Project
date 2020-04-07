@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.00.00">
+	<object class="AudioFile" id="{0fe7a26b-852f-4603-89a5-ff35925daa1c}">
+		<property name="assetPath">
+			<value>Battle Song1.mp3</value>
+		</property>
+		<property name="isStreaming">
+			<value>true</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>44.0999985</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>91.977142857142852</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{07f861ea-0e77-4cf5-be5f-e891ca0a6236}</destination>
+		</relationship>
+	</object>
+</objects>
