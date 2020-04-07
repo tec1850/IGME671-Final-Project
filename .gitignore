@@ -1,6 +1,7 @@
 [core]
-longpaths = true
+symlinks = false
 autocrlf = true
+longpaths = true
 SitontheMountainandWatchtheTigersFight/Library/PackageCache/com.unity.multiplayer-hlapi@1.0.2/
 
 [http]
