@@ -87,58 +87,58 @@
     <Compile Include="Assets\Plugins\FMOD\src\Runtime\wrapper\fmod_errors.cs" />
     <Compile Include="Assets\Plugins\FMOD\src\Runtime\wrapper\fmod_studio.cs" />
     <Reference Include="Unity.Timeline.Editor">
-      <HintPath>S:/Documents/.School/Year 4/Spring 2195/IGME671/IGME671/IGME671-Final-Project/SitontheMountainandWatchtheTigersFight/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
+      <HintPath>S:/Documents/.School/Year 4/Spring 2195/IGME671/IGME671-Final-Project/SitontheMountainandWatchtheTigersFight/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
     </Reference>
     <Reference Include="com.unity.multiplayer-hlapi.Editor">
-      <HintPath>S:/Documents/.School/Year 4/Spring 2195/IGME671/IGME671/IGME671-Final-Project/SitontheMountainandWatchtheTigersFight/Library/ScriptAssemblies/com.unity.multiplayer-hlapi.Editor.dll</HintPath>
+      <HintPath>S:/Documents/.School/Year 4/Spring 2195/IGME671/IGME671-Final-Project/SitontheMountainandWatchtheTigersFight/Library/ScriptAssemblies/com.unity.multiplayer-hlapi.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.VSCode.Editor">
-      <HintPath>S:/Documents/.School/Year 4/Spring 2195/IGME671/IGME671/IGME671-Final-Project/SitontheMountainandWatchtheTigersFight/Library/ScriptAssemblies/Unity.VSCode.Editor.dll</HintPath>
+      <HintPath>S:/Documents/.School/Year 4/Spring 2195/IGME671/IGME671-Final-Project/SitontheMountainandWatchtheTigersFight/Library/ScriptAssemblies/Unity.VSCode.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro.Editor">
-      <HintPath>S:/Documents/.School/Year 4/Spring 2195/IGME671/IGME671/IGME671-Final-Project/SitontheMountainandWatchtheTigersFight/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
+      <HintPath>S:/Documents/.School/Year 4/Spring 2195/IGME671/IGME671-Final-Project/SitontheMountainandWatchtheTigersFight/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.UI">
-      <HintPath>S:/Documents/.School/Year 4/Spring 2195/IGME671/IGME671/IGME671-Final-Project/SitontheMountainandWatchtheTigersFight/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
+      <HintPath>S:/Documents/.School/Year 4/Spring 2195/IGME671/IGME671-Final-Project/SitontheMountainandWatchtheTigersFight/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Timeline">
-      <HintPath>S:/Documents/.School/Year 4/Spring 2195/IGME671/IGME671/IGME671-Final-Project/SitontheMountainandWatchtheTigersFight/Library/ScriptAssemblies/Unity.Timeline.dll</HintPath>
+      <HintPath>S:/Documents/.School/Year 4/Spring 2195/IGME671/IGME671-Final-Project/SitontheMountainandWatchtheTigersFight/Library/ScriptAssemblies/Unity.Timeline.dll</HintPath>
     </Reference>
     <Reference Include="Unity.CollabProxy.Editor">
-      <HintPath>S:/Documents/.School/Year 4/Spring 2195/IGME671/IGME671/IGME671-Final-Project/SitontheMountainandWatchtheTigersFight/Library/ScriptAssemblies/Unity.CollabProxy.Editor.dll</HintPath>
+      <HintPath>S:/Documents/.School/Year 4/Spring 2195/IGME671/IGME671-Final-Project/SitontheMountainandWatchtheTigersFight/Library/ScriptAssemblies/Unity.CollabProxy.Editor.dll</HintPath>
     </Reference>
     <Reference Include="com.unity.multiplayer-weaver.Editor">
-      <HintPath>S:/Documents/.School/Year 4/Spring 2195/IGME671/IGME671/IGME671-Final-Project/SitontheMountainandWatchtheTigersFight/Library/ScriptAssemblies/com.unity.multiplayer-weaver.Editor.dll</HintPath>
+      <HintPath>S:/Documents/.School/Year 4/Spring 2195/IGME671/IGME671-Final-Project/SitontheMountainandWatchtheTigersFight/Library/ScriptAssemblies/com.unity.multiplayer-weaver.Editor.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.XR.LegacyInputHelpers">
-      <HintPath>S:/Documents/.School/Year 4/Spring 2195/IGME671/IGME671/IGME671-Final-Project/SitontheMountainandWatchtheTigersFight/Library/ScriptAssemblies/UnityEngine.XR.LegacyInputHelpers.dll</HintPath>
+      <HintPath>S:/Documents/.School/Year 4/Spring 2195/IGME671/IGME671-Final-Project/SitontheMountainandWatchtheTigersFight/Library/ScriptAssemblies/UnityEngine.XR.LegacyInputHelpers.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Rider.Editor">
-      <HintPath>S:/Documents/.School/Year 4/Spring 2195/IGME671/IGME671/IGME671-Final-Project/SitontheMountainandWatchtheTigersFight/Library/ScriptAssemblies/Unity.Rider.Editor.dll</HintPath>
+      <HintPath>S:/Documents/.School/Year 4/Spring 2195/IGME671/IGME671-Final-Project/SitontheMountainandWatchtheTigersFight/Library/ScriptAssemblies/Unity.Rider.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.2D.Sprite.Editor">
-      <HintPath>S:/Documents/.School/Year 4/Spring 2195/IGME671/IGME671/IGME671-Final-Project/SitontheMountainandWatchtheTigersFight/Library/ScriptAssemblies/Unity.2D.Sprite.Editor.dll</HintPath>
+      <HintPath>S:/Documents/.School/Year 4/Spring 2195/IGME671/IGME671-Final-Project/SitontheMountainandWatchtheTigersFight/Library/ScriptAssemblies/Unity.2D.Sprite.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.2D.Tilemap.Editor">
-      <HintPath>S:/Documents/.School/Year 4/Spring 2195/IGME671/IGME671/IGME671-Final-Project/SitontheMountainandWatchtheTigersFight/Library/ScriptAssemblies/Unity.2D.Tilemap.Editor.dll</HintPath>
+      <HintPath>S:/Documents/.School/Year 4/Spring 2195/IGME671/IGME671-Final-Project/SitontheMountainandWatchtheTigersFight/Library/ScriptAssemblies/Unity.2D.Tilemap.Editor.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor.SpatialTracking">
-      <HintPath>S:/Documents/.School/Year 4/Spring 2195/IGME671/IGME671/IGME671-Final-Project/SitontheMountainandWatchtheTigersFight/Library/ScriptAssemblies/UnityEditor.SpatialTracking.dll</HintPath>
+      <HintPath>S:/Documents/.School/Year 4/Spring 2195/IGME671/IGME671-Final-Project/SitontheMountainandWatchtheTigersFight/Library/ScriptAssemblies/UnityEditor.SpatialTracking.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.SpatialTracking">
-      <HintPath>S:/Documents/.School/Year 4/Spring 2195/IGME671/IGME671/IGME671-Final-Project/SitontheMountainandWatchtheTigersFight/Library/ScriptAssemblies/UnityEngine.SpatialTracking.dll</HintPath>
+      <HintPath>S:/Documents/.School/Year 4/Spring 2195/IGME671/IGME671-Final-Project/SitontheMountainandWatchtheTigersFight/Library/ScriptAssemblies/UnityEngine.SpatialTracking.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro">
-      <HintPath>S:/Documents/.School/Year 4/Spring 2195/IGME671/IGME671/IGME671-Final-Project/SitontheMountainandWatchtheTigersFight/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
+      <HintPath>S:/Documents/.School/Year 4/Spring 2195/IGME671/IGME671-Final-Project/SitontheMountainandWatchtheTigersFight/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor.XR.LegacyInputHelpers">
-      <HintPath>S:/Documents/.School/Year 4/Spring 2195/IGME671/IGME671/IGME671-Final-Project/SitontheMountainandWatchtheTigersFight/Library/ScriptAssemblies/UnityEditor.XR.LegacyInputHelpers.dll</HintPath>
+      <HintPath>S:/Documents/.School/Year 4/Spring 2195/IGME671/IGME671-Final-Project/SitontheMountainandWatchtheTigersFight/Library/ScriptAssemblies/UnityEditor.XR.LegacyInputHelpers.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor.UI">
-      <HintPath>S:/Documents/.School/Year 4/Spring 2195/IGME671/IGME671/IGME671-Final-Project/SitontheMountainandWatchtheTigersFight/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
+      <HintPath>S:/Documents/.School/Year 4/Spring 2195/IGME671/IGME671-Final-Project/SitontheMountainandWatchtheTigersFight/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
     </Reference>
     <Reference Include="com.unity.multiplayer-hlapi.Runtime">
-      <HintPath>S:/Documents/.School/Year 4/Spring 2195/IGME671/IGME671/IGME671-Final-Project/SitontheMountainandWatchtheTigersFight/Library/ScriptAssemblies/com.unity.multiplayer-hlapi.Runtime.dll</HintPath>
+      <HintPath>S:/Documents/.School/Year 4/Spring 2195/IGME671/IGME671-Final-Project/SitontheMountainandWatchtheTigersFight/Library/ScriptAssemblies/com.unity.multiplayer-hlapi.Runtime.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.AIModule">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2019.2.19f1/Editor/Data/Managed/UnityEngine/UnityEngine.AIModule.dll</HintPath>

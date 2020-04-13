@@ -532,7 +532,7 @@ public class GameMaster : MonoBehaviour
         dialogueSource = FMODUnity.RuntimeManager.CreateInstance(gameStartPath);
         dialogueSource.start();
 
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(0.475f);
 
         PlayGameMusic();
         Time.timeScale = 1.0f;
