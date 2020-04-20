@@ -7,7 +7,6 @@ using UnityEngine.UI;
 using FMOD.Studio;
 using FMODUnity;
 
-
 public class GameMaster : MonoBehaviour
 {
     // Players

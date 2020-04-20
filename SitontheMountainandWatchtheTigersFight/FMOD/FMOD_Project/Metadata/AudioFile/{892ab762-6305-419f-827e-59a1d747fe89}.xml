@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.00.00">
+	<object class="AudioFile" id="{892ab762-6305-419f-827e-59a1d747fe89}">
+		<property name="assetPath">
+			<value>Menu Transition.wav</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>44.0999985</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>0.41448979591836732</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{07f861ea-0e77-4cf5-be5f-e891ca0a6236}</destination>
+		</relationship>
+	</object>
+</objects>
