@@ -10,6 +10,8 @@ TagManager:
   - P2
   - Timer
   - Ground
+  - P1 Sword
+  - P2 Sword
   layers:
   - Default
   - TransparentFX

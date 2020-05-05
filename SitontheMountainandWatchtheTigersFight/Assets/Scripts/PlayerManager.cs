@@ -19,12 +19,6 @@ public class PlayerManager : MonoBehaviour
         Stock = gameMaster.stock;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
     public void Spawn()
     {
 		foreach (Transform cTrans in transform)

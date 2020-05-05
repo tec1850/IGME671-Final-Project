@@ -16,7 +16,8 @@ public class GameMaster : MonoBehaviour
     private EventSystem eventSystem;
 
     // Shared Game Attributes
-    public float timeLimit;
+    private float initialTime;
+    public float TimeLimit { get; set; }
     public bool TimerOn { get; set; }
 
     public int stock;
@@ -26,6 +27,7 @@ public class GameMaster : MonoBehaviour
 
     private bool gameOn;
 
+    // Camera
     public Camera mainCamera;
     public Camera p1Camera;
     public Camera p2Camera;
@@ -61,31 +63,40 @@ public class GameMaster : MonoBehaviour
     public Text p2StatLabel;
     public Text p2StatShadowLabel;
 
-
     // Audio Variables
+    [SerializeField]
+    [Range(0f, 1f)]
+    public float intensity;
+    public float Intensity { get { return intensity; } set { intensity = value; } }
+
+    private static EventInstance musicSource;
+    private static EventInstance soundEffectsSource;
+    private static EventInstance ambienceSource;
+    private static EventInstance dialogueSource;
+
     [FMODUnity.EventRef]
     public string menuMusicPath;
     [FMODUnity.EventRef]
     public string fightMusicPath;
-    //[FMODUnity.EventRef]
-    //public string victoryMusicPath;
-
-    private EventInstance musicSource;
+    [FMODUnity.EventRef]
+    public string victoryMusicPath;
 
     [FMODUnity.EventRef]
     public string gameStartPath;
     [FMODUnity.EventRef]
     public string gameEndPath;
+    [FMODUnity.EventRef]
+    public string winnerIsPath;
 
-    private EventInstance dialogueSource;
+    [FMODUnity.EventRef]
+    public string gongPath;
+    [FMODUnity.EventRef]
+    public string menuSelectPath;
 
-    /*
-    public AudioSource music;
-    public AudioClip[] song;
-    public AudioSource soundEffect;
-    public AudioClip[] sound;
-    */
-
+    [FMODUnity.EventRef]
+    public string mountinAmbiencePath;
+    [FMODUnity.EventRef]
+    public string cheerAmbiencePath;
 
     // Use this for initialization
     void Start()
@@ -96,9 +107,10 @@ public class GameMaster : MonoBehaviour
         p2Camera.enabled = false;
 
         //Audio
-        dialogueSource = FMODUnity.RuntimeManager.CreateInstance(gameStartPath);
-        musicSource = FMODUnity.RuntimeManager.CreateInstance(menuMusicPath);
-        musicSource.start();
+        PlayMenuMusic();
+        PlayMountainAmbience();
+
+        Intensity = 0;
 
         // Initializing players
         Player1 = GameObject.Find("Player1").GetComponent<PlayerManager>();
@@ -111,7 +123,7 @@ public class GameMaster : MonoBehaviour
 
         // Sets up Title Screen
         Cursor.lockState = CursorLockMode.Locked;
-        PlayTitleMusic();
+        PlayMenuMusic();
 
         titleUI.SetActive(true);
         optionsUI.SetActive(false);
@@ -127,16 +139,19 @@ public class GameMaster : MonoBehaviour
         gameOn = false;
     }
 
-
     // Update is called once per frame
     void Update()
     {
+        // Dynamically updates intensity parameter in FMOD
+        musicSource.setParameterByName("Intensity", Intensity);
+
         // Transition from title to game
         if (titleUI.activeSelf && Input.anyKey)
         {
             titleUI.SetActive(false);
 
-            NewGame(stock, timeLimit);
+
+            NewGame(stock, TimeLimit);
         }
 
         if (gameOn)
@@ -147,27 +162,29 @@ public class GameMaster : MonoBehaviour
                 UpdateTimer();
 
                 // Checks for timer endgame
-                if (timeLimit <= 0)
+                if (TimeLimit <= 0)
                 {
-                    timeLimit = 0;
+                    TimeLimit = 0;
                     TimerOn = false;
-                    Time.timeScale = .2f;
+                    Time.timeScale = 0.2f;
 
-                    PlayTimeSound();
-                    Invoke("EndGame", .5f);
+                    Invoke("EndGame", 0.5f);
                 }
             }
 
             // Checks for stock endgame
             if (StockOn && (Player1.Stock == 0 || Player2.Stock == 0))
             {
-                PlayTimeSound();
-                EndGame();
+                Time.timeScale = 0.2f;
+                PlayGameSound();
+                gameOn = false;
+                Invoke("EndGame", 0.5f);
             }
 
             // Transistion from game to pause menu
             if (!isPaused && gameUI.activeSelf && (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.JoystickButton7)))
             {
+                PlayGongNoise();
                 Pause();
             }
 
@@ -188,25 +205,24 @@ public class GameMaster : MonoBehaviour
                         p2Camera.enabled = !p2Camera.enabled;
                     }
                 }
-
-            }
-
-            if (winnerUI.activeSelf && (Input.GetKeyUp(KeyCode.Space) || Input.GetKeyUp(KeyCode.JoystickButton0)))
-            {
-                winnerUI.SetActive(false);
-                gameOn = false;
-
-                titleUI.SetActive(true);
-                PlayTitleMusic();
             }
         }
 
-    }
+        if (winnerUI.activeSelf && (Input.GetKeyUp(KeyCode.Space) || Input.GetKeyUp(KeyCode.JoystickButton0)))
+        {
+            winnerUI.SetActive(false);
+            gameOn = false;
 
+            titleUI.SetActive(true);
+            PlayMountainAmbience();
+            PlayMenuMusic();
+        }
+    }
 
     // Sets up a new game
     public void NewGame(int stockNum, float setTime)
     {
+        Intensity = 0;
         stock = stockNum;
 
         Player1.Kills = 0;
@@ -222,7 +238,7 @@ public class GameMaster : MonoBehaviour
         if (stock > 0)
         {
             UpdateStats();
-            timeLimit = 0;
+            TimeLimit = 0;
 
             StockOn = true;
 
@@ -234,7 +250,7 @@ public class GameMaster : MonoBehaviour
             UpdateStats();
             stock = 0;
 
-            timeLimit = (setTime) * 60;
+            TimeLimit = (setTime) * 60;
             TimerOn = true;
 
             stockUI.SetActive(false);
@@ -249,7 +265,6 @@ public class GameMaster : MonoBehaviour
 
         Time.timeScale = 0.3f;
 
-        //music.Stop();
         StartCoroutine(CountDown());
 
         gameOn = true;
@@ -258,8 +273,7 @@ public class GameMaster : MonoBehaviour
     // Checks for the winner when game ends
     public void EndGame()
     {
-        PlayWinnerIsSound();
-
+        Intensity = 0;
         Time.timeScale = 0f;
 
         gameUI.SetActive(false);
@@ -273,6 +287,7 @@ public class GameMaster : MonoBehaviour
             {
                 mainCamera.enabled = false;
                 p1Camera.enabled = true;
+                VictoryCircle();
 
                 winnerNameLabel.text = Player1.Name;
                 winnerNameShadowLabel.text = Player1.Name;
@@ -288,6 +303,7 @@ public class GameMaster : MonoBehaviour
             {
                 mainCamera.enabled = false;
                 p2Camera.enabled = true;
+                VictoryCircle();
 
                 winnerNameLabel.text = Player2.Name;
                 winnerNameShadowLabel.text = Player2.Name;
@@ -312,6 +328,7 @@ public class GameMaster : MonoBehaviour
             {
                 mainCamera.enabled = false;
                 p1Camera.enabled = true;
+                VictoryCircle();
 
                 winnerNameLabel.text = Player1.Name;
                 winnerNameShadowLabel.text = Player1.Name;
@@ -327,6 +344,8 @@ public class GameMaster : MonoBehaviour
             {
                 mainCamera.enabled = false;
                 p2Camera.enabled = true;
+
+                VictoryCircle();
 
                 winnerNameLabel.text = Player2.Name;
                 winnerNameShadowLabel.text = Player2.Name;
@@ -346,7 +365,7 @@ public class GameMaster : MonoBehaviour
         isPaused = true;
 
         Time.timeScale = 0.0f;
-        //music.volume = 0.1f;
+        musicSource.setVolume(0.3f);
         Cursor.lockState = CursorLockMode.None;
 
         StartCoroutine(HighlightBtn());
@@ -355,10 +374,10 @@ public class GameMaster : MonoBehaviour
         pauseUI.SetActive(true);
     }
 
-
     // Resumes game
     public void Resume()
     {
+        PlayGongNoise();
         isPaused = false;
 
         p1Camera.enabled = false;
@@ -369,9 +388,8 @@ public class GameMaster : MonoBehaviour
         gameUI.SetActive(true);
 
         Time.timeScale = 1.0f;
-        //music.volume = 0.3f;
+        musicSource.setVolume(1f);
     }
-
 
     // Toggles controls screen - Off by default
     public void ToggleControls()
@@ -389,16 +407,17 @@ public class GameMaster : MonoBehaviour
         }
     }
 
-
     // Updates timer
     public void UpdateTimer()
     {
         if (TimerOn)
-            timeLimit -= Time.deltaTime;
+            TimeLimit -= Time.deltaTime;
+        Intensity = (initialTime - TimeLimit) / initialTime;
 
-        var minutes = timeLimit / 60; //Divide the guiTime by sixty to get the minutes.
-        var seconds = timeLimit % 60;//Use the euclidean division for the seconds.
-        var fraction = (timeLimit * 100) % 100;
+
+        var minutes = TimeLimit / 60; //Divide the guiTime by sixty to get the minutes.
+        var seconds = TimeLimit % 60;//Use the euclidean division for the seconds.
+        var fraction = (TimeLimit * 100) % 100;
 
         if (minutes < 0 && seconds < 0 && fraction <= 0)
         {
@@ -431,115 +450,123 @@ public class GameMaster : MonoBehaviour
     IEnumerator HighlightBtn()
     {
         eventSystem.SetSelectedGameObject(null);
+        PlayMenuSelectNoise();
         yield return null;
         eventSystem.SetSelectedGameObject(eventSystem.firstSelectedGameObject);
     }
 
     public void UpdateStats()
     {
-        p1StatLabel.text = Player1.Kills.ToString();
-        p1StatShadowLabel.text = Player1.Kills.ToString();
+        if (TimerOn)
+        {
+            p1StatLabel.text = Player1.Kills.ToString();
+            p1StatShadowLabel.text = Player1.Kills.ToString();
 
-        p2StatLabel.text = Player2.Kills.ToString();
-        p2StatShadowLabel.text = Player2.Kills.ToString();
-    }
+            p2StatLabel.text = Player2.Kills.ToString();
+            p2StatShadowLabel.text = Player2.Kills.ToString();
+        }
+        else if (Player1.Stock > 0 && Player2.Stock > 0)
+        {
+            p1StatLabel.text = Player1.Stock.ToString();
+            p1StatShadowLabel.text = Player1.Stock.ToString();
 
-    public void PlayTitleMusic()
-    {
-        //music.Stop();
-        //music.clip = song[0];
-        //music.Play();
-
-        musicSource.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
-        musicSource.release();
-        musicSource = FMODUnity.RuntimeManager.CreateInstance(menuMusicPath);
-        musicSource.start();
+            p2StatLabel.text = Player2.Stock.ToString();
+            p2StatShadowLabel.text = Player2.Stock.ToString();
+        }
     }
-    public void PlayGameMusic()
-    {
-        //music.Stop();
-        //music.clip = song[Random.Range(1, 3)];
-        //music.Play();
-
-        musicSource.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
-        musicSource.release();
-        musicSource = FMODUnity.RuntimeManager.CreateInstance(fightMusicPath);
-        musicSource.start();
-    }
-
-    public void PlayStockSound()
-    {
-        //soundEffect.Stop();
-        //soundEffect.clip = sound[0];
-        //soundEffect.Play();
-    }
-    public void PlayThreeSound()
-    {
-        //soundEffect.Stop();
-        //soundEffect.clip = sound[1];
-        //soundEffect.Play();
-    }
-
-    public void PlayTwoSound()
-    {
-        //soundEffect.Stop();
-        //soundEffect.clip = sound[2];
-        //soundEffect.Play();
-    }
-    public void PlayOneSound()
-    {
-        //soundEffect.Stop();
-        //soundEffect.clip = sound[3];
-        //soundEffect.Play();
-    }
-    public void PlayGoSound()
-    {
-        //soundEffect.Stop();
-        //soundEffect.clip = sound[4];
-        //soundEffect.Play();
-    }
-    public void PlayTimeSound()
-    {
-        //soundEffect.Stop();
-        //soundEffect.clip = sound[5];
-        //soundEffect.Play();
-    }
-    public void PlayDeathSound()
-    {
-        //soundEffect.Stop();
-        //soundEffect.clip = sound[6];
-        //soundEffect.Play();
-    }
-    public void PlayGameSound()
-    {
-        //soundEffect.Stop();
-        //soundEffect.clip = sound[7];
-        //soundEffect.Play();
-
-        dialogueSource = FMODUnity.RuntimeManager.CreateInstance(gameEndPath);
-        dialogueSource.start();
-    }
-    public void PlayWinnerIsSound()
-    {
-        //soundEffect.Stop();
-        //soundEffect.clip = sound[8];
-        //soundEffect.Play();
-    }
-
-    IEnumerator CountDown()
-    {
-        dialogueSource = FMODUnity.RuntimeManager.CreateInstance(gameStartPath);
-        dialogueSource.start();
-
-        yield return new WaitForSeconds(0.475f);
-
-        PlayGameMusic();
-        Time.timeScale = 1.0f;
-    }
-
     public void Quit()
     {
         Application.Quit();
     }
 
+    // AUDIO
+    public void VictoryCircle()
+    {
+        PlayWinnerIsSound();
+        PlayCheerAmbience();
+        PlayVictoryMusic();
+    }
+    //Music
+    public void PlayGameMusic()
+    {
+        musicSource.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
+        musicSource.release();
+        musicSource = FMODUnity.RuntimeManager.CreateInstance(fightMusicPath);
+        musicSource.start();
+    }
+    public void PlayMenuMusic()
+    {
+        musicSource.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
+        musicSource.release();
+        musicSource = FMODUnity.RuntimeManager.CreateInstance(menuMusicPath);
+        musicSource.start();
+    }
+    public void PlayVictoryMusic()
+    {
+        musicSource.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
+        musicSource.release();
+        musicSource = FMODUnity.RuntimeManager.CreateInstance(victoryMusicPath);
+        musicSource.start();
+    }
+    // Dialogue
+    public void PlayStartSound()
+    {
+        dialogueSource = FMODUnity.RuntimeManager.CreateInstance(gameStartPath);
+        dialogueSource.start();
+        dialogueSource.release();
+    }
+    public void PlayGameSound()
+    {
+        dialogueSource = FMODUnity.RuntimeManager.CreateInstance(gameEndPath);
+        dialogueSource.start();
+        dialogueSource.release();
+    }
+    public void PlayWinnerIsSound()
+    {
+        dialogueSource = FMODUnity.RuntimeManager.CreateInstance(winnerIsPath);
+        dialogueSource.start();
+        dialogueSource.release();
+    }
+
+    // Sound Effects
+    public void PlayGongNoise()
+    {
+        soundEffectsSource = FMODUnity.RuntimeManager.CreateInstance(gongPath);
+        soundEffectsSource.start();
+        soundEffectsSource.release();
+    }
+    public void PlayMenuSelectNoise()
+    {
+        soundEffectsSource = FMODUnity.RuntimeManager.CreateInstance(menuSelectPath);
+        soundEffectsSource.start();
+        soundEffectsSource.release();
+    }
+
+    // Ambience
+    public void PlayMountainAmbience()
+    {
+        ambienceSource.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
+        ambienceSource.release();
+        ambienceSource = FMODUnity.RuntimeManager.CreateInstance(mountinAmbiencePath);
+        ambienceSource.start();
+    }
+    public void PlayCheerAmbience()
+    {
+        ambienceSource.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
+        ambienceSource.release();
+        ambienceSource = FMODUnity.RuntimeManager.CreateInstance(cheerAmbiencePath);
+        ambienceSource.start();
+    }
+
+    // Game start
+    IEnumerator CountDown()
+    {
+        PlayStartSound();
+
+        yield return new WaitForSeconds(0.475f);
+
+        PlayGameMusic();
+        PlayMountainAmbience();
+        Time.timeScale = 1.0f;
+    }
 }
